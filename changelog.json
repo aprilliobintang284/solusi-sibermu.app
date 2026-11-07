@@ -1,11 +1,10 @@
 {
-  "_catatan": "Untuk rilis baru: tambahkan satu objek di paling atas 'releases'. Versi di bagian hero diambil dari 'latest'. Status 'segera' menampilkan lencana 'Segera'; hapus status itu saat sudah resmi rilis.",
+  "_catatan": "Untuk rilis baru: tambahkan satu objek di paling atas 'releases'. Versi di bagian hero diambil dari 'latest'. Opsional: tambahkan \"status\": \"segera\" untuk menampilkan lencana 'Segera'.",
   "latest": "1.0.4",
   "size": "55 MB",
   "releases": [
     {
       "version": "1.0.4",
-      "status": "segera",
       "date": "",
       "changes": [
         "Kuis dan tugas dikerjakan langsung di app: pilihan ganda, isian, dan uraian, lengkap dengan timer, simpan otomatis, dan halaman review.",
