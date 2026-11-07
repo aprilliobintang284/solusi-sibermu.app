@@ -96,7 +96,7 @@ h1, h2, h3 { line-height: 1.2; margin: 0; letter-spacing: -0.01em; }
 
 /* footer */
 .footer { background: var(--navy); color: #dbe4ff; padding: 36px 0; font-size: 14px; }
-.footer p { margin: 4px 0; }
+.footer p { margin: 4px 0; overflow-wrap: anywhere; }
 .footer strong { color: #fff; }
 .footer a { color: #fff; }
 
