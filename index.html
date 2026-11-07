@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 
@@ -31,7 +31,7 @@
       <div class="hero-text">
         <h1>Solusi SiberMu</h1>
         <p class="lead">Aplikasi Android untuk membuka LMS Solusi | SiberMu dengan lebih ringkas: checklist minggu ini, materi offline, forum, dan agenda dalam satu app.</p>
-        <a class="btn" id="dl" href="https://github.com/aprilliobintang284/solusi-sibermu.app/releases/latest/download/SiberMu.apk" rel="noopener">
+        <a class="btn" id="dl" href="https://github.com/aprilliobintang284/solusi-sibermu.app/releases/latest" rel="noopener">
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0 5-5m-5 5-5-5M4 20h16"/></svg>
           Download APK (Android)
         </a>
@@ -187,6 +187,19 @@
     if (e.key === 'ArrowLeft') show(cur - 1);
     if (e.key === 'ArrowRight') show(cur + 1);
   });
+})();
+(function () {
+  // Tombol download: ambil file .apk dari rilis terbaru (apa pun nama filenya), cadangan: halaman rilis.
+  var btn = document.getElementById('dl');
+  fetch('https://api.github.com/repos/aprilliobintang284/solusi-sibermu.app/releases/latest')
+    .then(function (r) { return r.json(); })
+    .then(function (rel) {
+      var apk = (rel.assets || []).filter(function (a) { return /\.apk$/i.test(a.name); })[0];
+      if (!apk) return;
+      btn.href = apk.browser_download_url;
+      document.getElementById('size').textContent = Math.round(apk.size / 1e6) + ' MB';
+    })
+    .catch(function () {});
 })();
 (function () {
   var box = document.getElementById('changelog');
