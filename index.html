@@ -39,8 +39,8 @@
         <p class="meta small">Aplikasi tidak resmi. Setelah download, ikuti <a href="#pasang">cara pasang</a> di bawah.</p>
       </div>
       <div class="hero-shots" aria-hidden="false">
-        <img class="shot shot-back" src="img/gelap-home.jpg" alt="Beranda SiberMu dalam mode gelap" width="780" height="1688">
-        <img class="shot shot-front" src="img/home.jpg" alt="Beranda SiberMu: checklist minggu ini dan lanjutkan belajar" width="780" height="1688">
+        <img class="shot shot-back" src="img/hero-gelap.jpg" alt="Beranda SiberMu dalam mode gelap" width="640" height="1210">
+        <img class="shot shot-front" src="img/hero-home.jpg" alt="Beranda SiberMu: checklist minggu ini dan lanjutkan belajar" width="640" height="1210">
       </div>
     </div>
   </section>
@@ -48,7 +48,7 @@
   <section id="fitur" class="section">
     <div class="wrap">
       <h2>Fitur utama</h2>
-      <p class="sub">Tangkapan layar dari mode demo aplikasi, jadi semua nama dan data di dalamnya hanya contoh.</p>
+      <p class="sub">Klik gambar untuk memperbesar. Tangkapan layar dari mode demo aplikasi, jadi semua nama dan data di dalamnya hanya contoh.</p>
       <div class="features">
         <article class="feat">
           <img src="img/home-expand.jpg" alt="Checklist presensi, penugasan, dan forum per mata kuliah" loading="lazy" width="780" height="1688">
@@ -158,7 +158,36 @@
   </div>
 </footer>
 
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Tampilan gambar diperbesar">
+  <button class="lb-x" aria-label="Tutup">&times;</button>
+  <button class="lb-nav lb-prev" aria-label="Sebelumnya">&#8249;</button>
+  <img alt="">
+  <button class="lb-nav lb-next" aria-label="Berikutnya">&#8250;</button>
+  <p class="lb-cap"></p>
+</div>
+
 <script>
+(function () {
+  var imgs = Array.prototype.slice.call(document.querySelectorAll('.feat img'));
+  var lb = document.getElementById('lb'), lbImg = lb.querySelector('img'), cap = lb.querySelector('.lb-cap'), cur = 0;
+  function show(i) { cur = (i + imgs.length) % imgs.length; lbImg.src = imgs[cur].src; lbImg.alt = imgs[cur].alt; cap.textContent = imgs[cur].closest('.feat').querySelector('h3').textContent + ' (' + (cur + 1) + '/' + imgs.length + ')'; }
+  function open(i) { show(i); lb.hidden = false; document.body.style.overflow = 'hidden'; lb.querySelector('.lb-x').focus(); }
+  function close() { lb.hidden = true; document.body.style.overflow = ''; }
+  imgs.forEach(function (im, i) {
+    im.tabIndex = 0; im.setAttribute('role', 'button'); im.title = 'Klik untuk memperbesar';
+    im.addEventListener('click', function () { open(i); });
+    im.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); } });
+  });
+  lb.addEventListener('click', function (e) { if (e.target === lb || e.target.classList.contains('lb-x')) close(); });
+  lb.querySelector('.lb-prev').addEventListener('click', function () { show(cur - 1); });
+  lb.querySelector('.lb-next').addEventListener('click', function () { show(cur + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+})();
 (function () {
   var box = document.getElementById('changelog');
   function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
