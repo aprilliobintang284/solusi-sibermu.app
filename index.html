@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 
@@ -229,6 +229,29 @@
 (function () {
   var box = document.getElementById('changelog');
   function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function initDropdowns() {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    Array.prototype.forEach.call(box.querySelectorAll('details.rel'), function (d) {
+      var body = d.querySelector('.body'), anim = null;
+      d.querySelector('summary').addEventListener('click', function (e) {
+        e.preventDefault();
+        if (anim) anim.cancel();
+        var opening = !d.open;
+        if (reduce) { d.open = opening; d.classList.toggle('is-open', opening); return; }
+        d.classList.toggle('is-open', opening);
+        if (opening) d.open = true;
+        var full = body.scrollHeight;
+        var from = opening ? 0 : body.offsetHeight, to = opening ? full : 0;
+        body.style.overflow = 'hidden';
+        anim = body.animate([{ height: from + 'px', opacity: opening ? 0 : 1 }, { height: to + 'px', opacity: opening ? 1 : 0 }],
+          { duration: 280, easing: 'cubic-bezier(.2,.7,.2,1)' });
+        anim.onfinish = anim.oncancel = function () {
+          anim = null; body.style.overflow = '';
+          if (!opening) d.open = false;
+        };
+      });
+    });
+  }
   fetch('changelog.json', { cache: 'no-cache' })
     .then(function (r) { return r.json(); })
     .then(function (data) {
@@ -238,10 +261,11 @@
         var badge = r.status === 'segera' ? '<span class="badge">Segera</span>' : '';
         var date = r.date ? '<span class="date">' + esc(r.date) + '</span>' : '';
         var open = i === 0 ? ' open' : '';
-        return '<details class="rel"' + open + '><summary><h3>Versi ' + esc(r.version) + '</h3>' + badge + date +
-          '<span class="count">' + r.changes.length + ' perubahan</span></summary><ul>' +
-          r.changes.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></details>';
+        return '<details class="rel' + (i === 0 ? ' is-open' : '') + '"' + open + '><summary><h3>Versi ' + esc(r.version) + '</h3>' + badge + date +
+          '<span class="count">' + r.changes.length + ' perubahan</span></summary><div class="body"><ul>' +
+          r.changes.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></div></details>';
       }).join('');
+      initDropdowns();
     })
     .catch(function () { box.innerHTML = '<p class="muted">Riwayat versi gagal dimuat. Coba muat ulang halaman.</p>'; });
 })();
