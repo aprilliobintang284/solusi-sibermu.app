@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
 
@@ -234,11 +234,13 @@
     .then(function (data) {
       if (data.latest) document.getElementById('ver').textContent = data.latest;
       if (data.size) document.getElementById('size').textContent = data.size;
-      box.innerHTML = data.releases.map(function (r) {
+      box.innerHTML = data.releases.map(function (r, i) {
         var badge = r.status === 'segera' ? '<span class="badge">Segera</span>' : '';
         var date = r.date ? '<span class="date">' + esc(r.date) + '</span>' : '';
-        return '<article class="rel"><header><h3>Versi ' + esc(r.version) + '</h3>' + badge + date + '</header><ul>' +
-          r.changes.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></article>';
+        var open = i === 0 ? ' open' : '';
+        return '<details class="rel"' + open + '><summary><h3>Versi ' + esc(r.version) + '</h3>' + badge + date +
+          '<span class="count">' + r.changes.length + ' perubahan</span></summary><ul>' +
+          r.changes.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></details>';
       }).join('');
     })
     .catch(function () { box.innerHTML = '<p class="muted">Riwayat versi gagal dimuat. Coba muat ulang halaman.</p>'; });
