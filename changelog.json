@@ -1,8 +1,20 @@
 {
   "_catatan": "Untuk rilis baru: tambahkan satu objek di paling atas 'releases'. Versi di bagian hero diambil dari 'latest'. Opsional: tambahkan \"status\": \"segera\" untuk menampilkan lencana 'Segera'.",
-  "latest": "1.0.5",
+  "latest": "1.0.6",
   "size": "56 MB",
   "releases": [
+    {
+      "version": "1.0.6",
+      "date": "",
+      "changes": [
+        "Presensi bisa diisi langsung di aplikasi: tombol mengikuti pilihan di LMS (Hadir, Terlambat, atau Tidak Hadir), dan aplikasi mengecek ulang ke LMS sebelum menyatakan \"tercatat\".",
+        "Sesi reguler, sinkronus, dan asinkronus tampil terpisah; sesi kembar cukup diisi sekali.",
+        "Riwayat presensi per hari dan per bulan, tidak perlu scroll panjang.",
+        "Presensi yang terkunci menampilkan materi yang harus dibuka dulu.",
+        "Perbaikan error \"Alamat IP klien tidak cocok\" saat memakai data seluler.",
+        "Masuk ulang otomatis saat kena batas login 6 menit dari LMS."
+      ]
+    },
     {
       "version": "1.0.5",
       "date": "",
