@@ -1,8 +1,17 @@
 {
   "_catatan": "Untuk rilis baru: tambahkan satu objek di paling atas 'releases'. Versi di bagian hero diambil dari 'latest'. Opsional: tambahkan \"status\": \"segera\" untuk menampilkan lencana 'Segera'.",
-  "latest": "1.0.6",
+  "latest": "1.0.7",
   "size": "56 MB",
   "releases": [
+    {
+      "version": "1.0.7",
+      "date": "",
+      "changes": [
+        "Update langsung dari aplikasi: tekan \"Update sekarang\" di Beranda, unduh, lalu pasang.",
+        "Edit profil dari tab Akun: ganti foto (galeri atau kamera), tentang saya, minat, kontak, kota, dan siapa yang bisa melihat email.",
+        "Nama dan email tetap mengikuti akun Google kampus."
+      ]
+    },
     {
       "version": "1.0.6",
       "date": "",
