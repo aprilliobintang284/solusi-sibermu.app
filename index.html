@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
 
@@ -298,14 +298,32 @@
     .then(function (data) {
       if (data.latest) document.getElementById('ver').textContent = data.latest;
       if (data.size) document.getElementById('size').textContent = data.size;
-      box.innerHTML = data.releases.map(function (r, i) {
+      var VISIBLE = 3;
+      function card(r, i) {
         var badge = r.status === 'segera' ? '<span class="badge">Segera</span>' : '';
         var date = r.date ? '<span class="date">' + esc(r.date) + '</span>' : '';
         var open = i === 0 ? ' open' : '';
         return '<details class="rel' + (i === 0 ? ' is-open' : '') + '"' + open + '><summary><h3>Versi ' + esc(r.version) + '</h3>' + badge + date +
           '<span class="count">' + r.changes.length + ' perubahan</span></summary><div class="body"><ul>' +
           r.changes.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></div></details>';
-      }).join('');
+      }
+      var shown = data.releases.slice(0, VISIBLE).map(card).join('');
+      var older = data.releases.slice(VISIBLE);
+      var html = shown;
+      if (older.length) {
+        html += '<div class="older" id="older" hidden>' + older.map(function (r, i) { return card(r, i + VISIBLE); }).join('') + '</div>' +
+          '<button type="button" class="more-btn" id="more" aria-expanded="false" aria-controls="older">Lihat versi sebelumnya (' + older.length + ')</button>';
+      }
+      box.innerHTML = html;
+      if (older.length) {
+        var more = document.getElementById('more'), wrap = document.getElementById('older');
+        more.addEventListener('click', function () {
+          var open = wrap.hidden;
+          wrap.hidden = !open;
+          more.setAttribute('aria-expanded', String(open));
+          more.textContent = open ? 'Sembunyikan versi sebelumnya' : 'Lihat versi sebelumnya (' + older.length + ')';
+        });
+      }
       initDropdowns();
     })
     .catch(function () { box.innerHTML = '<p class="muted">Riwayat versi gagal dimuat. Coba muat ulang halaman.</p>'; });
