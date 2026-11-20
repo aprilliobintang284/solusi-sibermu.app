@@ -1,8 +1,20 @@
 {
   "_catatan": "Untuk rilis baru: tambahkan satu objek di paling atas 'releases'. Versi di bagian hero diambil dari 'latest'. Opsional: tambahkan \"status\": \"segera\" untuk menampilkan lencana 'Segera'.",
-  "latest": "1.0.10",
+  "latest": "1.0.11",
   "size": "56 MB",
   "releases": [
+    {
+      "version": "1.0.11",
+      "date": "",
+      "changes": [
+        "Cari di forum: cari topik atau balasan berdasarkan judul, isi, atau nama.",
+        "Tombol \"Postinganku\" untuk langsung menemukan topik dan balasanmu sendiri.",
+        "Perbaikan: semua topik forum kini tampil (sebelumnya hanya 50 terbaru).",
+        "Forum dengan banyak balasan kini lebih ringan: tampil 20 dulu, sisanya lewat tombol \"Lihat 20 balasan lainnya\".",
+        "Pesan \"Jawabanmu telah terkirim\" setelah mengirim, plus tombol \"Lihat di web\" untuk memastikan.",
+        "Balasan forum kini rapi: mendukung daftar bernomor, poin, tebal, dan miring."
+      ]
+    },
     {
       "version": "1.0.10",
       "date": "",
